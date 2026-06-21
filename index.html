@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Something Special ❤️</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    height:100vh;
+    overflow:hidden;
+    background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+.card{
+    text-align:center;
+    background:rgba(255,255,255,0.12);
+    padding:40px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 25px rgba(255,255,255,0.2);
+    width:90%;
+    max-width:520px;
+    z-index:10;
+}
+button{
+    padding:12px 22px;
+    border:none;
+    border-radius:20px;
+    font-size:16px;
+    cursor:pointer;
+    margin:10px;
+}
+.yes{background:#00c853;color:white;}
+.no{background:#d50000;color:white;position:relative;}
+h1{text-shadow:0 0 10px #ff4d6d;}
+.cat{font-size:45px;}
+
+.float{
+    position:absolute;
+    font-size:28px;
+    animation:floatUp 7s linear infinite;
+}
+@keyframes floatUp{
+    0%{transform:translateY(100vh);opacity:1;}
+    100%{transform:translateY(-10vh);opacity:0;}
+}
+
+.spark{
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:gold;
+    border-radius:50%;
+    animation:boom 1s infinite;
+}
+@keyframes boom{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(3);opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<audio id="song" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="box">
+    <div class="cat">😿</div>
+    <h1>💖 I have something special to tell you... 💖</h1>
+    <button class="yes" onclick="startExperience()">Tap to Begin</button>
+</div>
+
+<script>
+let noBtn;
+
+function startMusic(){
+    document.getElementById("song").play().catch(()=>{});
+}
+
+function startExperience(){
+    startMusic();
+    step1();
+}
+
+function step1(){
+    document.getElementById("box").innerHTML=`
+        <div class="cat">😿</div>
+        <h1>💭 Be honest with me...</h1>
+        <p>Do you trust me?</p>
+        <button class="yes" onclick="step2()">YES 💖</button>
+        <button class="no" id="no1">NO 💔</button>
+    `;
+    setupNo("no1");
+}
+
+function step2(){
+    document.getElementById("box").innerHTML=`
+        <div class="cat">🥺</div>
+        <h1>💞 Do you love talking to me?</h1>
+        <button class="yes" onclick="step3()">YES 💖</button>
+        <button class="no" id="no2">NO 💔</button>
+    `;
+    setupNo("no2");
+}
+
+function step3(){
+    document.getElementById("box").innerHTML=`
+        <div class="cat">😭</div>
+        <h1>🥺 Ek last question...</h1>
+        <p>Tum mere bacche ho na? 😭🫶</p>
+        <button class="yes" onclick="finalStep()">YES 💖</button>
+        <button class="no" id="no3">NO 💔</button>
+    `;
+    setupNo("no3");
+}
+
+function finalStep(){
+    document.getElementById("box").innerHTML=`
+        <div class="cat">💖😻💖</div>
+        <h1>💖 Hehe, I knew it... 💖</h1>
+        <p>Hamesha aise hi pyaare rehna 🥺🫶</p>
+    `;
+    startFireworks();
+}
+
+function setupNo(id){
+    noBtn=document.getElementById(id);
+    noBtn.addEventListener("mouseover",moveNo);
+    noBtn.addEventListener("click",moveNo);
+    noBtn.addEventListener("touchstart",moveNo);
+}
+
+function moveNo(){
+    let x=Math.random()*(window.innerWidth-120);
+    let y=Math.random()*(window.innerHeight-80);
+    noBtn.style.position="absolute";
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+}
+
+function startFireworks(){
+    setInterval(()=>{
+        for(let i=0;i<8;i++){
+            let s=document.createElement("div");
+            s.className="spark";
+            s.style.left=Math.random()*100+"vw";
+            s.style.top=Math.random()*100+"vh";
+            document.body.appendChild(s);
+            setTimeout(()=>s.remove(),1200);
+        }
+    },300);
+}
+
+setInterval(()=>{
+    let items=["💖","🌹","🌸","💘"];
+    let el=document.createElement("div");
+    el.className="float";
+    el.innerHTML=items[Math.floor(Math.random()*items.length)];
+    el.style.left=Math.random()*100+"vw";
+    el.style.fontSize=(25+Math.random()*35)+"px";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),7000);
+},250);
+</script>
+
+</body>
+</html>
